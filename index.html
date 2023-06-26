@@ -3,10 +3,25 @@
   <head>
     <title>UploadVault</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+      .tab {
+        display: inline-block;
+        margin-right: 10px;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
       <h1>UploadVault</h1>
+      <div class="tab">
+        <a href="dashboard.html">Dashboard</a>
+      </div>
+      <div class="tab">
+        <a href="login.html">Login</a>
+      </div>
+      <div class="tab">
+        <a href="signup.html">Signup</a>
+      </div>
       <div>
         <form id="uploadForm">
           <input type="file" id="fileInput" />
@@ -23,7 +38,7 @@
       // Initialize Firebase
       const firebaseConfig = {
         apiKey: "AIzaSyCd_DvGzouCoZfbuxw3KuTWs2SkR0qRs8s",
-        authDomain: "uploadvaultfiles.firebaseapp.com",
+        authDomain: "AIzaSyCd_DvGzouCoZfbuxw3KuTWs2SkR0qRs8s",
         projectId: "uploadvaultfiles",
         storageBucket: "uploadvaultfiles.appspot.com",
         messagingSenderId: "499707923090",
