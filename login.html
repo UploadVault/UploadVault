@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>UploadVault - Login</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Login</h1>
+      <form id="loginForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required />
+        <br />
+        <label for="password">Password:</label>
+        <input type="password" id="password" required />
+        <br />
+        <button type="submit">Login</button>
+      </form>
+      <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+    </div>
+
+    <!-- Add the Firebase JavaScript library -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js"></script>
+    <script>
+      // Initialize Firebase
+      const firebaseConfig = {
+        apiKey: "AIzaSyCd_DvGzouCoZfbuxw3KuTWs2SkR0qRs8s",
+        authDomain: "uploadvaultfiles.firebaseapp.com",
+        projectId: "uploadvaultfiles",
+        storageBucket: "uploadvaultfiles.appspot.com",
+        messagingSenderId: "499707923090",
+        appId: "1:499707923090:web:82ba72ab0f6434d668f44b",
+        measurementId: "G-STBDW31GEB"
+      };
+      firebase.initializeApp(firebaseConfig);
+
+      // Handle login form submission
+      const loginForm = document.getElementById("loginForm");
+      loginForm.addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent the default form submission
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(email, password)
+          .then(function (userCredential) {
+            // Redirect to the dashboard or perform any other action after successful login
+            window.location.href = "dashboard.html";
+          })
+          .catch(function (error) {
+            console.error("Error logging in:", error);
+            // Handle login error, e.g., display an error message
+          });
+      });
+    </script>
+  </body>
+</html>
