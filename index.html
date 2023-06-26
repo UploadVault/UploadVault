@@ -1,16 +1,51 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>File Upload</title>
+    <title>UploadVault</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <div class="container">
-      <h1>File Upload</h1>
-      <form action="https://api.github.com/repos/UploadVault/uploadvault.github.io/contents/uploadedfiles" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" required>
-        <input type="submit" value="Upload">
-      </form>
+      <h1>UploadVault</h1>
+      <div id="fileList"></div>
     </div>
+
+    <!-- Add the Firebase JavaScript library -->
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-storage.js"></script>
+    <script>
+      // Initialize Firebase
+      const firebaseConfig = {
+        apiKey: "AIzaSyCd_DvGzouCoZfbuxw3KuTWs2SkR0qRs8s",
+        authDomain: "uploadvaultfiles.firebaseapp.com",
+        projectId: "uploadvaultfiles",
+        storageBucket: "uploadvaultfiles.appspot.com",
+        messagingSenderId: "499707923090",
+        appId: "1:499707923090:web:82ba72ab0f6434d668f44b",
+        measurementId: "G-STBDW31GEB"
+      };
+      firebase.initializeApp(firebaseConfig);
+
+      // Get a reference to the Firebase storage service
+      const storage = firebase.storage();
+
+      // Retrieve the list of files and display them in the dashboard
+      const fileListDiv = document.getElementById("fileList");
+      storage
+        .ref("uploadedfiles")
+        .listAll()
+        .then(function (res) {
+          res.items.forEach(function (item) {
+            const fileLink = document.createElement("a");
+            fileLink.href = item.fullPath;
+            fileLink.textContent = item.name;
+            fileListDiv.appendChild(fileLink);
+            fileListDiv.appendChild(document.createElement("br"));
+          });
+        })
+        .catch(function (error) {
+          console.error("Error retrieving file list:", error);
+        });
+    </script>
   </body>
 </html>
