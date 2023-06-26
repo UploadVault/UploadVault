@@ -56,7 +56,7 @@
       // Handle file upload form submission
       const uploadForm = document.getElementById("uploadForm");
       uploadForm.addEventListener("submit", function (e) {
-        e.preventDefault();
+        e.preventDefault(); // Prevent the default form submission
         const fileInput = document.getElementById("fileInput");
         const file = fileInput.files[0];
         if (file) {
