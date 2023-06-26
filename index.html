@@ -7,12 +7,18 @@
   <body>
     <div class="container">
       <h1>UploadVault</h1>
+      <div>
+        <form id="uploadForm">
+          <input type="file" id="fileInput" />
+          <button type="submit">Upload File</button>
+        </form>
+      </div>
       <div id="fileList"></div>
     </div>
 
     <!-- Add the Firebase JavaScript library -->
-    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-storage.js"></script>
     <script>
       // Initialize Firebase
       const firebaseConfig = {
@@ -46,6 +52,34 @@
         .catch(function (error) {
           console.error("Error retrieving file list:", error);
         });
+
+      // Handle file upload form submission
+      const uploadForm = document.getElementById("uploadForm");
+      uploadForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const fileInput = document.getElementById("fileInput");
+        const file = fileInput.files[0];
+        if (file) {
+          const fileName = file.name;
+          const storageRef = storage.ref("uploadedfiles/" + fileName);
+          const uploadTask = storageRef.put(file);
+
+          // Show upload progress
+          uploadTask.on(
+            "state_changed",
+            function (snapshot) {
+              // Update progress bar or display progress percentage
+            },
+            function (error) {
+              console.error("Error uploading file:", error);
+            },
+            function () {
+              console.log("File uploaded successfully");
+              // Refresh file list or perform any other action after successful upload
+            }
+          );
+        }
+      });
     </script>
   </body>
 </html>
