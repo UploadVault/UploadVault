@@ -1,100 +1,50 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>UploadVault</title>
-    <link rel="stylesheet" href="style.css">
+    <title>We are moving to Netlify</title>
     <style>
-      .tab {
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      p {
+        color: #666;
+      }
+
+      .logo {
+        max-width: 200px;
+        margin: 30px auto;
+      }
+
+      .button {
         display: inline-block;
-        margin-right: 10px;
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+
+      .button:hover {
+        background-color: #45a049;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>UploadVault</h1>
-      <div class="tab">
-        <a href="dashboard.html">Dashboard</a>
-      </div>
-      <div class="tab">
-        <a href="login.html">Login</a>
-      </div>
-      <div class="tab">
-        <a href="signup.html">Signup</a>
-      </div>
-      <div>
-        <form id="uploadForm">
-          <input type="file" id="fileInput" />
-          <button type="submit">Upload File</button>
-        </form>
-      </div>
-      <div id="fileList"></div>
-    </div>
-
-    <!-- Add the Firebase JavaScript library -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-storage.js"></script>
-    <script>
-      // Initialize Firebase
-      const firebaseConfig = {
-        apiKey: "AIzaSyCd_DvGzouCoZfbuxw3KuTWs2SkR0qRs8s",
-        authDomain: "AIzaSyCd_DvGzouCoZfbuxw3KuTWs2SkR0qRs8s",
-        projectId: "uploadvaultfiles",
-        storageBucket: "uploadvaultfiles.appspot.com",
-        messagingSenderId: "499707923090",
-        appId: "1:499707923090:web:82ba72ab0f6434d668f44b",
-        measurementId: "G-STBDW31GEB"
-      };
-      firebase.initializeApp(firebaseConfig);
-
-      // Get a reference to the Firebase storage service
-      const storage = firebase.storage();
-
-      // Retrieve the list of files and display them in the dashboard
-      const fileListDiv = document.getElementById("fileList");
-      storage
-        .ref("uploadedfiles")
-        .listAll()
-        .then(function (res) {
-          res.items.forEach(function (item) {
-            const fileLink = document.createElement("a");
-            fileLink.href = item.fullPath;
-            fileLink.textContent = item.name;
-            fileListDiv.appendChild(fileLink);
-            fileListDiv.appendChild(document.createElement("br"));
-          });
-        })
-        .catch(function (error) {
-          console.error("Error retrieving file list:", error);
-        });
-
-      // Handle file upload form submission
-      const uploadForm = document.getElementById("uploadForm");
-      uploadForm.addEventListener("submit", function (e) {
-        e.preventDefault(); // Prevent the default form submission
-        const fileInput = document.getElementById("fileInput");
-        const file = fileInput.files[0];
-        if (file) {
-          const fileName = file.name;
-          const storageRef = storage.ref("uploadedfiles/" + fileName);
-          const uploadTask = storageRef.put(file);
-
-          // Show upload progress
-          uploadTask.on(
-            "state_changed",
-            function (snapshot) {
-              // Update progress bar or display progress percentage
-            },
-            function (error) {
-              console.error("Error uploading file:", error);
-            },
-            function () {
-              console.log("File uploaded successfully");
-              // Refresh file list or perform any other action after successful upload
-            }
-          );
-        }
-      });
-    </script>
+    <h1>We are moving to Netlify</h1>
+    <img class="logo" src="netlify-logo.png" alt="Netlify Logo" />
+    <p>
+      We're excited to announce that we are moving our website hosting to
+      Netlify. This will enable us to take advantage of powerful features like
+      easy deployments, form handling, and more.
+    </p>
+    <p>Stay tuned for the new and improved version of our website!</p>
+    <a class="button" href="https://www.netlify.com">Learn more about Netlify</a>
   </body>
 </html>
