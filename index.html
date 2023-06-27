@@ -1,51 +1,73 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>We are moving to Netlify</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-      }
+<head>
+  <title>UploadVault</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>UploadVault</h1>
+    <form enctype="multipart/form-data" method="post" action="#" id="upload-form">
+      <label for="file-input" class="label-upload">Choose File</label>
+      <input type="file" name="file" id="file-input" />
+      <button type="submit" class="button">Upload</button>
+    </form>
+    <div id="alert" class="alert"></div>
+  </div>
 
-      h1 {
-        color: #333;
-      }
+  <script>
+    const form = document.getElementById('upload-form');
+    const alertDiv = document.getElementById('alert');
 
-      p {
-        color: #666;
-      }
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-      .logo {
-        max-width: 200px;
-        margin: 30px auto;
-      }
+      const fileInput = document.getElementById('file-input');
+      const file = fileInput.files[0];
 
-      .button {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #4caf50;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 4px;
-        transition: background-color 0.3s;
-      }
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const content = event.target.result;
 
-      .button:hover {
-        background-color: #45a049;
+          const repo = 'uvcdn';
+          const owner = 'UploadVault';
+          const filePath = 'path/to/uploaded/file/' + file.name;
+
+          const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
+          const token = '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';
+
+          const requestOptions = {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              message: 'Upload file',
+              content: btoa(content),
+            }),
+          };
+
+          fetch(apiUrl, requestOptions)
+            .then((response) => {
+              if (response.ok) {
+                alertDiv.textContent = 'File uploaded successfully!';
+                alertDiv.style.display = 'block';
+                form.reset();
+              } else {
+                alertDiv.textContent = 'Error uploading file.';
+                alertDiv.style.display = 'block';
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+        };
+
+        reader.readAsText(file);
       }
-    </style>
-  </head>
-  <body>
-    <h1>We are moving to Netlify</h1>
-    <img class="logo" src="netlify-logo.png" alt="Netlify Logo" />
-    <p>
-      We're excited to announce that we are moving our website hosting to
-      Netlify. This will enable us to be able to allow users to upload files better and easier, Unfortunately
-      this will require us to delete all of our previous files uploaded to our site, We will attempt to restore
-      as much files as possible but any files over 20MB will not be restored.
-    </p>
-    <p>Stay tuned for the new and improved version of our website!</p>
-    <a class="button" href="https://www.netlify.com">Learn more about Netlify</a>
-  </body>
-</html> 
+    });
+  </script>
+</body>
+</html>
