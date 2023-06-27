@@ -1,73 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>UploadVault</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maintenance in Progress</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>UploadVault</h1>
-    <form enctype="multipart/form-data" method="post" action="#" id="upload-form">
-      <label for="file-input" class="label-upload">Choose File</label>
-      <input type="file" name="file" id="file-input" />
-      <button type="submit" class="button">Upload</button>
-    </form>
-    <div id="alert" class="alert"></div>
+    <h1>Maintenance in Progress</h1>
+    <p>We apologize for the inconvenience, but we are currently performing maintenance on our website. Please check back later.</p>
+    <img src="maintenance-image.jpg">
   </div>
-
-  <script>
-    const form = document.getElementById('upload-form');
-    const alertDiv = document.getElementById('alert');
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const fileInput = document.getElementById('file-input');
-      const file = fileInput.files[0];
-
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const content = event.target.result;
-
-          const repo = 'uvcdn';
-          const owner = 'UploadVault';
-          const filePath = 'path/to/uploaded/file/' + file.name;
-
-          const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
-          const token = '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';
-
-          const requestOptions = {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-              message: 'Upload file',
-              content: btoa(content),
-            }),
-          };
-
-          fetch(apiUrl, requestOptions)
-            .then((response) => {
-              if (response.ok) {
-                alertDiv.textContent = 'File uploaded successfully!';
-                alertDiv.style.display = 'block';
-                form.reset();
-              } else {
-                alertDiv.textContent = 'Error uploading file.';
-                alertDiv.style.display = 'block';
-              }
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-            });
-        };
-
-        reader.readAsText(file);
-      }
-    });
-  </script>
 </body>
 </html>
